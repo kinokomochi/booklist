@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'BooksController@index');
+Route::post('/', 'BooksController@inputImage');
+
+Route::get('/post', 'BooksController@getBook');
 
 Route::post('/post', 'BooksController@postBook');
 
-Route::get('/post', 'BooksController@getBook');
 

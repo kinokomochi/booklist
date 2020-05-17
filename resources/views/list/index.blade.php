@@ -3,45 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form</title>
+    <title> ImageForm</title>
 </head>
 <body>
 @extends('layout')
 @section('title')
 @section('content')
-@if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error}}</li>
-            @endforeach
-            </ul>
-        </div>
-    @endif
+<form action="/post" method="post">
+{{csrf_field()}}
+    <div class="form-group">
+        <h3>本を登録する</h3>
+        <label>本の画像</label>
+        <input type="file" name="image" enctype="multipart/form-data" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">登録へ進む</button>
+</form>
+<br>
 
-    <form action="/post" method="post">
-    {{csrf_field()}}
-        <div class="form-group">
-            <label>選んでね</label>
-            <select name="status">
-                <option name="read_now" value="進行中">進行中</option>
-                <option name="want"　value="読みたい">読みたい</option>
-                <option name="finished" value="読み終わった">読み終わった</option>
-            </select>
-            <br>
-            <label>タイトル</label>
-            <input type="text" name="title" class="form-control">
-            <label>著者</label>
-            <input type="text" name="autor" class="form-control">
-            <label>値段</label>
-            <input type="text" name="price" class="form-control">
-            <label>要約</label>
-            <textarea type="text" name="summary" class="form-control" row="4"></textarea>
-            <label>感想</label>
-            <textarea type="text" name="impression" class="form-control" row="10"></textarea>
-            <label>備考</label>
-            <input type="text" name="remark" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary">画像登録へ進む</button>
-    </form>
+<table class="table">
+    <thead>
+    <tr>
+        <th>状態</th>
+        <th>タイトル</th>
+        <th>著者</th>
+        <th>値段</th>
+        <th>要約</th>
+        <th>感想</th>
+        <th>備考</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($book as $val)
+    <tr>
+        <td>{{$val->status}}</td>
+        <td>{{$val->title}}</td>
+        <td>{{$val->autor}}</td>
+        <td>{{$val->price}}</td>
+        <td>{{$val->summary}}</td>
+        <td>{{$val->impression}}</td>
+        <td>{{$val->remark}}</td>
+    </tr>
+    @endforeach
+    </tbody>
+</table>
+
 @endsection

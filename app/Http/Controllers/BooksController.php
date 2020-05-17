@@ -11,7 +11,21 @@ class BooksController extends Controller
     //
     public function index()
     {
-        return view('list.index');
+            $book = new Book();
+            $book = Book::all();
+            return view('list.index', ['book' => $book]);
+    }
+
+    public function inputImage(Request $request)
+    {
+        $validateImage = $request->validate([
+            'image' => 'required|image|mimes:JPEG,jpeg,PNG,png,JPG,jpg'
+        ]);
+        $image = date('YmdHis') . $request->image;
+        if($image->isValid()){
+            $filepath = $image->store('public');
+        }
+        return view('list.post', ['filepath'=>$filepath]);
     }
     
     public function postBook(Request $request)
@@ -26,21 +40,21 @@ class BooksController extends Controller
         $book = new Book();
         $book->status = $request->status;
         $book->title = $request->title;
+        $book->image = $request->image;
         $book->autor = $request->autor;
         $book->price = $request->price;
         $book->summary = $request->summary;
         $book->impression = $request->impression;
         $book->remark = $request->remark;
         $book->save();
-        //データ取得
-        $list = Book::all();
-        return view('list.post', ['book' => $book, 'list' => $list]);
+       
+        return view('/');
     }
 
     public function getBook(Request $request)
     {
         $book = new Book();
-        $book = Book::first();
+        $book = Book::all();
         return view('list.post', ['book' => $book]);
     }
 }
