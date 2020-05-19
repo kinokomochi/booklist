@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> ImageForm</title>
+    <title>ImageForm</title>
 </head>
 <body>
 @extends('layout')
 @section('title')
 @section('content')
-<form action="/post" method="post">
+<form action="{{route('image.post')}}" method="post">
 {{csrf_field()}}
     <div class="form-group">
         <h3>本を登録する</h3>
